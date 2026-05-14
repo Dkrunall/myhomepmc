@@ -291,9 +291,9 @@ function RegistrationsContent() {
                 <label className="text-[10px] font-bold uppercase tracking-label text-black/60 px-2 block">Documentation Intelligence</label>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {[
-                    { label: 'Structural Build Plan', url: selectedReg.doc_building_plan },
-                    { label: 'PTS Survey', url: selectedReg.doc_plain_table },
-                    { label: 'Assured Site Plan', url: selectedReg.doc_assured_plan },
+                    { label: 'Structural Build Plan', url: selectedReg.build_plan_url },
+                    { label: 'PTS Survey', url: selectedReg.plain_table_survey_url },
+                    { label: 'Assured Site Plan', url: selectedReg.assured_plan_url },
                   ].map((doc) => (
                     <div key={doc.label} className="p-6 bg-white border border-black/10">
                       <div className="flex items-center gap-4 mb-6">
