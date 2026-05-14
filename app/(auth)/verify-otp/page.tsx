@@ -85,27 +85,28 @@ function VerifyOtpForm() {
   }
 
   return (
-    <div className="animate-fade-in text-center">
-      <div className="w-20 h-20 rounded-[28px] bg-[var(--nv-gold)]/10 border border-[var(--nv-gold)]/20 flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-[var(--nv-gold)]/5">
-        <ShieldCheck className="w-10 h-10 text-[var(--nv-gold)]" />
-      </div>
-
-      <div className="mb-10">
-        <h1 className="nv-heading text-3xl mb-3">Security Verification</h1>
-        <p className="text-slate-400">
-          Enter the 6-digit code sent to <br/>
-          <span className="text-white font-bold">{email}</span>
+    <div className="animate-fade-in w-full mx-auto">
+      <div className="mb-14">
+        <div className="w-14 h-14 bg-black flex items-center justify-center mb-8">
+          <ShieldCheck className="w-7 h-7 text-white" />
+        </div>
+        <h1 className="text-4xl md:text-5xl font-serif tracking-display text-black mb-4">
+          Security <br/> <em className="italic font-light">Verification.</em>
+        </h1>
+        <p className="text-black/50 font-serif text-base leading-relaxed">
+          Enter the 6-digit code sent to{' '}
+          <span className="text-black font-medium">{email}</span>
         </p>
       </div>
 
       {error && (
-        <div className="mb-8 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium">
+        <div className="mb-8 p-6 bg-[#FAFAFA] border border-black text-black text-[10px] uppercase tracking-label font-bold">
           {error}
         </div>
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="flex items-center justify-center gap-3 sm:gap-4 mb-10" onPaste={handlePaste}>
+        <div className="flex items-center justify-between gap-2 mb-10" onPaste={handlePaste}>
           {otp.map((digit, i) => (
             <input
               key={i}
@@ -116,8 +117,7 @@ function VerifyOtpForm() {
               value={digit}
               onChange={e => handleChange(i, e.target.value)}
               onKeyDown={e => handleKeyDown(i, e)}
-              className="w-12 h-16 sm:w-14 sm:h-18 text-center text-2xl font-bold text-white bg-white/5 border border-white/10 rounded-2xl outline-none transition-all focus:border-[var(--nv-gold)] focus:bg-white/[0.08]"
-              style={{ caretColor: 'var(--nv-gold)' }}
+              className="w-12 h-14 text-center text-xl font-bold text-black bg-[#FAFAFA] border border-black/10 outline-none transition-colors focus:border-black focus:bg-white"
             />
           ))}
         </div>
@@ -125,28 +125,27 @@ function VerifyOtpForm() {
         <button
           type="submit"
           disabled={loading}
-          className="btn-primary w-full justify-center h-14 text-lg disabled:opacity-50"
+          className="w-full bg-black text-white py-6 text-[10px] font-bold uppercase tracking-label hover:bg-black/80 transition-colors flex items-center justify-center gap-4 disabled:opacity-30"
         >
           {loading ? (
-            <Loader2 className="w-6 h-6 animate-spin" />
+            <Loader2 className="w-5 h-5 animate-spin" />
           ) : (
             <>
-              Verify & Complete <ArrowRight className="w-5 h-5 ml-2" />
+              Verify & Complete <ArrowRight className="w-5 h-5" />
             </>
           )}
         </button>
       </form>
 
-      <div className="mt-10 pt-8 border-t border-white/5">
+      <div className="mt-16 pt-8 border-t border-black/10">
         <button
           onClick={handleResend}
           disabled={resending || resendCooldown > 0}
-          className="flex items-center justify-center gap-2 text-sm mx-auto font-bold transition-all disabled:opacity-40"
-          style={{ color: resendCooldown > 0 ? '#475569' : 'var(--nv-gold)' }}
+          className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-label text-black/40 hover:text-black transition-colors disabled:opacity-40 disabled:pointer-events-none"
         >
           <RefreshCw className={`w-4 h-4 ${resending ? 'animate-spin' : ''}`} />
           {resendCooldown > 0
-            ? `Resend available in ${resendCooldown}s`
+            ? `Resend in ${resendCooldown}s`
             : resending
             ? 'Dispatching Code...'
             : 'Resend Verification Code'}
@@ -160,7 +159,7 @@ export default function VerifyOtpPage() {
   return (
     <Suspense fallback={
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-8 h-8 animate-spin text-[var(--nv-gold)]" />
+        <Loader2 className="w-8 h-8 animate-spin text-black" />
       </div>
     }>
       <VerifyOtpForm />
