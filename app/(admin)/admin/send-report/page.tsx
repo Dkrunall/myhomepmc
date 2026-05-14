@@ -100,7 +100,7 @@ export default function SendReportPage() {
         registration_id: data.registration_id,
         user_id: data.user_id,
         sent_by: adminUser.id,
-        file_url: publicUrl,
+        report_url: publicUrl,
         cover_message: data.cover_message,
       })
 

@@ -227,7 +227,7 @@ export default function UserDashboard() {
                         <p className="text-[9px] uppercase tracking-label text-black/40 mt-1">{formatDateTime(report.sent_at)}</p>
                       </div>
                     </div>
-                    <a href={report.file_url} target="_blank" className="p-3 border border-black/10 text-black/40 hover:text-black hover:border-black transition-colors">
+                    <a href={report.report_url} target="_blank" className="p-3 border border-black/10 text-black/40 hover:text-black hover:border-black transition-colors">
                       <Download className="w-4 h-4" />
                     </a>
                   </div>

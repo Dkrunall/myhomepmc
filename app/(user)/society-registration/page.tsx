@@ -104,7 +104,7 @@ function FileDropzone({
   )
 }
 
-const emptyFile = () => ({ file: null, uploading: false, url: '', error: '' })
+const emptyFile = (): { file: File | null, uploading: boolean, url: string, error: string } => ({ file: null, uploading: false, url: '', error: '' })
 
 export default function SocietyRegistrationPage() {
   const router = useRouter()
@@ -147,9 +147,9 @@ export default function SocietyRegistrationPage() {
         setRoadWidth(String(data.road_width))
         setHasRestriction(data.restriction_of_laws)
         setRestrictionNotes(data.restriction_notes ?? '')
-        if (data.doc_building_plan) setBuildPlan({ ...emptyFile(), url: data.doc_building_plan })
-        if (data.doc_plain_table) setPlainTable({ ...emptyFile(), url: data.doc_plain_table })
-        if (data.doc_assured_plan) setAssuredPlan({ ...emptyFile(), url: data.doc_assured_plan })
+        if (data.build_plan_url) setBuildPlan({ ...emptyFile(), url: data.build_plan_url })
+        if (data.plain_table_survey_url) setPlainTable({ ...emptyFile(), url: data.plain_table_survey_url })
+        if (data.assured_plan_url) setAssuredPlan({ ...emptyFile(), url: data.assured_plan_url })
       }
       setLoading(false)
     }
@@ -157,7 +157,7 @@ export default function SocietyRegistrationPage() {
   }, [])
 
   const { canEdit, timeLeft } = getEditTimeLeft(existing?.can_edit_until)
-  const isLocked = existing && !canEdit
+  const isLocked = !!existing && !canEdit
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -177,9 +177,9 @@ export default function SocietyRegistrationPage() {
       road_width: Number(roadWidth),
       restriction_of_laws: hasRestriction,
       restriction_notes: hasRestriction ? restrictionNotes : null,
-      doc_building_plan: buildPlan.url || null,
-      doc_plain_table: plainTable.url || null,
-      doc_assured_plan: assuredPlan.url || null,
+      build_plan_url: buildPlan.url || null,
+      plain_table_survey_url: plainTable.url || null,
+      assured_plan_url: assuredPlan.url || null,
     }
 
     let err

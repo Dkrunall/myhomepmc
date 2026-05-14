@@ -111,7 +111,7 @@ export default function DocumentsPage() {
                 
                 <div className="flex items-center sm:flex-col sm:items-end">
                   <a
-                    href={report.file_url}
+                    href={report.report_url}
                     target="_blank"
                     className="bg-black text-white px-8 py-4 text-[10px] font-bold uppercase tracking-label hover:bg-black/80 transition-colors flex items-center gap-4"
                   >
