@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Eye, EyeOff, Loader2, ArrowRight } from 'lucide-react'
+import { Eye, EyeOff, Loader2, ArrowRight, Mail } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 
 export default function RegisterPage() {
@@ -15,6 +15,7 @@ export default function RegisterPage() {
   const [showPass, setShowPass] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [sent, setSent] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -35,7 +36,10 @@ export default function RegisterPage() {
     const { error: authError } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { full_name: fullName } },
+      options: {
+        data: { full_name: fullName },
+        emailRedirectTo: `${window.location.origin}/api/auth/callback`,
+      },
     })
 
     if (authError) {
@@ -44,7 +48,36 @@ export default function RegisterPage() {
       return
     }
 
-    router.push(`/verify-otp?email=${encodeURIComponent(email)}`)
+    setSent(true)
+    setLoading(false)
+  }
+
+  if (sent) {
+    return (
+      <div className="animate-fade-in w-full mx-auto">
+        <div className="w-14 h-14 bg-black flex items-center justify-center mb-8">
+          <Mail className="w-7 h-7 text-white" />
+        </div>
+        <div className="mb-10">
+          <h1 className="text-4xl md:text-5xl font-serif tracking-display text-black mb-4">
+            Check Your <br/> <em className="italic font-light">Inbox.</em>
+          </h1>
+          <p className="text-black/50 font-serif text-base leading-relaxed">
+            A confirmation link has been sent to{' '}
+            <span className="text-black font-medium">{email}</span>
+            <br />Click the link in the email to activate your account.
+          </p>
+        </div>
+        <div className="p-6 bg-[#FAFAFA] border border-black/10 text-[10px] uppercase tracking-label text-black/50 font-bold">
+          Didn&apos;t receive it? Check your spam folder.
+        </div>
+        <div className="mt-10">
+          <Link href="/login" className="text-[10px] font-bold uppercase tracking-label text-black/40 hover:text-black transition-colors underline underline-offset-4">
+            Back to Login
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -53,7 +86,7 @@ export default function RegisterPage() {
         <h1 className="text-4xl md:text-5xl font-serif tracking-display text-black mb-4">
           Initialize <br/> <em className="italic font-light">Access.</em>
         </h1>
-        <p className="text-black/50 font-serif text-lg">Join India's premier architectural PMC platform.</p>
+        <p className="text-black/50 font-serif text-lg">Join India&apos;s premier architectural PMC platform.</p>
       </div>
 
       {error && (
